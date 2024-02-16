@@ -5,7 +5,7 @@ class CustomError(Exception):
     pass
 
 
-def is_canonical_smiles(input_smiles: str) -> bool:
+def is_canonical(input_smiles: str) -> bool:
     """
     Checks whether a SMILES string is canonical.
 
@@ -22,7 +22,7 @@ def is_canonical_smiles(input_smiles: str) -> bool:
         return False
 
     canonical_smiles = Chem.MolToSmiles(mol, isomericSmiles=False, canonical=True)
-    return input_smiles == canonical_smiles
+    return input_smiles == canonical_smiles  # type: ignore[arg-type]
 
 
 def to_canonical_smiles(input_smiles: str, isomericSmiles: bool = False) -> str:
@@ -44,7 +44,7 @@ def to_canonical_smiles(input_smiles: str, isomericSmiles: bool = False) -> str:
         error_message = "Invalid SMILES."
         raise CustomError(error_message)
     canonical_smiles = Chem.MolToSmiles(mol, isomericSmiles=isomericSmiles, canonical=True)
-    return canonical_smiles
+    return str(canonical_smiles)
 
 
 def to_inchi(canonical_smiles: str) -> str:
@@ -65,4 +65,4 @@ def to_inchi(canonical_smiles: str) -> str:
         error_message = "Invalid canonical SMILES."
         raise CustomError(error_message)
     inchi = Chem.MolToInchi(mol)
-    return inchi
+    return str(inchi)
