@@ -5,24 +5,45 @@ class CustomError(Exception):
     pass
 
 
-def to_cansmiles(input_smiles: str) -> str:
+def is_canonical_smiles(input_smiles: str) -> bool:
     """
-    This function generates a canonical SMILES from any SMILES.
+    Checks whether a SMILES string is canonical.
 
     Args:
-    input_smiles (str): a string representing a SMILES molecule
-
-    Raises:
-    ValueError: If the SMILES is not valid
+    input_smiles (str): A string representing a SMILES molecule.
 
     Returns:
-    str: a string that represents the canonical SMILES
+    bool: True if the SMILES string is canonical, False otherwise.
+    """
+    mol = Chem.MolFromSmiles(input_smiles)
+    if not mol:
+        # If RDKit cannot parse the SMILES, it's considered not canonical.
+        # Alternatively, you could raise an exception or handle the error differently.
+        return False
+
+    canonical_smiles = Chem.MolToSmiles(mol, isomericSmiles=False, canonical=True)
+    return input_smiles == canonical_smiles
+
+
+def to_canonical_smiles(input_smiles: str, isomericSmiles: bool = False) -> str:
+    """
+    This function generates a canonical SMILES from any SMILES, with an option to include isomeric information.
+
+    Args:
+    input_smiles (str): A string representing a SMILES molecule.
+    isomericSmiles (bool, optional): Whether to include isomeric information in the canonical SMILES. Defaults to False.
+
+    Raises:
+    CustomError: If the SMILES is not valid.
+
+    Returns:
+    str: A string that represents the canonical SMILES.
     """
     mol = Chem.MolFromSmiles(input_smiles)
     if not mol:
         error_message = "Invalid SMILES."
         raise CustomError(error_message)
-    canonical_smiles = Chem.MolToSmiles(mol, isomericSmiles=True)
+    canonical_smiles = Chem.MolToSmiles(mol, isomericSmiles=isomericSmiles, canonical=True)
     return canonical_smiles
 
 

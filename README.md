@@ -49,20 +49,38 @@ For more details, see [here](https://fpgmaas.github.io/cookiecutter-poetry/featu
 
 Repository initiated with [fpgmaas/cookiecutter-poetry](https://github.com/fpgmaas/cookiecutter-poetry).
 
-## Examples
+##
+
+To check if a SMILES string is canonical:
+
+```shell
+poetry run python -m chemical_helper.cli is-canonical --smiles "[input_smiles_string]"
+```
 
 For converting any SMILES to canonical SMILES:
 
 ```shell
-poetry run python -m chemical_helper.cli to-cansmiles-cli --smiles "[input_smiles_string]"
+poetry run python -m chemical_helper.cli to-canonical-smiles --smiles "[input_smiles_string]"
 ```
 
 Replace `[input_smiles_string]` with your SMILES string.
 
+For example:
+
+```shell
+poetry run python -m chemical_helper.cli to-canonical-smiles --smiles "CCCCCCCCCCCCCCCCCC(=O)OCC(CO[C@H]1C([C@H]([C@H](C(CS(=O)(=O)[O-])O1)O)O)O)OC(=O)CCCCCCCCCCCCCCCCC"
+```
+
 And for converting canonical SMILES to InChI:
 
 ```shell
-poetry run python -m chemical_helper.cli to-inchi-cli --cansmiles "[canonical_smiles_string]"
+poetry run python -m chemical_helper.cli to-inchi --cansmiles "[canonical_smiles_string]"
 ```
 
 Replace `[canonical_smiles_string]` with your canonical SMILES string.
+
+For example:
+
+```shell
+poetry run python -m chemical_helper.cli to-inchi --cansmiles "CCCCCCCCCCCCCCCCCC(=O)OCC(CO[C@H]1C([C@H]([C@H](C(CS(=O)(=O)[O-])O1)O)O)O)OC(=O)CCCCCCCCCCCCCCCCC"
+```
