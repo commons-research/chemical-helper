@@ -48,3 +48,21 @@ For more details, see [here](https://fpgmaas.github.io/cookiecutter-poetry/featu
 ---
 
 Repository initiated with [fpgmaas/cookiecutter-poetry](https://github.com/fpgmaas/cookiecutter-poetry).
+
+## Examples
+
+For converting any SMILES to canonical SMILES:
+
+```shell
+poetry run python -m chemical_helper.cli to-cansmiles-cli --smiles "[input_smiles_string]"
+```
+
+Replace `[input_smiles_string]` with your SMILES string.
+
+And for converting canonical SMILES to InChI:
+
+```shell
+poetry run python -m chemical_helper.cli to-inchi-cli --cansmiles "[canonical_smiles_string]"
+```
+
+Replace `[canonical_smiles_string]` with your canonical SMILES string.
